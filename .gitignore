@@ -2,6 +2,7 @@
 data/
 images/
 report_images/
+references/
 
 # Python virtual environment
 .venv/

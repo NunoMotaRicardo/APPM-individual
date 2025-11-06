@@ -1,0 +1,31 @@
+STOP LOSS BUG FIXES - SUMMARY
+==============================
+
+THREE CRITICAL BUGS FIXED:
+
+1. Same-Day Cancellation
+   - Stops were placed and cancelled on same trading day
+   - Fixed by queueing stop placement for next bar
+   
+2. Position Accumulation
+   - Entry price overwritten when adding to positions
+   - Fixed with weighted average calculation
+   
+3. Incomplete Clearing  
+   - Stops cleared on partial sells
+   - Fixed by checking position.size == 0
+
+KEY CHANGES:
+- Added: pending_stop_placements queue
+- Modified: notify_order() to queue stops
+- Modified: next() to process queue at start
+- Modified: _place_stop_order() for better logging
+
+EXPECTED BEHAVIOR:
+- Stops placed NEXT bar after buy
+- Stop sizes match total position
+- Weighted average entry prices
+- Stops survive rebalancing
+
+TEST YOUR STRATEGY:
+Look for "placed -> cancelled" on same day (should be GONE)

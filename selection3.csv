@@ -1,0 +1,54 @@
+﻿ticker;asset_class;Tracker;name
+DBA;Agriculture;Agriculture;Invesco DB Agriculture Fund
+CANE;Agriculture;Sugar;Teucrium Sugar Fund
+CORN;Agriculture;Corn;Teucrium Corn Fund
+WEAT;Agriculture;Wheat;Teucrium Wheat Fund
+SOYB;Agriculture;Soybeans;Teucrium Soybean Fund
+TLT;Bonds;US Bonds 20y;iShares 20+ Year Treasury Bond ETF
+TLH;Bonds;US Bonds 10y;iShares 10-20 Year Treasury Bond ETF
+IEF;Bonds;US Bonds 7y;iShares 7-10 Year Treasury Bond ETF
+ISTB;Bonds;US Bonds 1y;iShares Core 1-5 Year USD Bond ETF
+GOVI;Bonds;US Bonds;Invesco Equal Weight 0-30 Years Treasury ETF
+EMB;Bonds;Emerging market  Bonds;iShares J.P. Morgan USD Emerging Markets Bond ETF
+BWX;Bonds;International Bonds;SPDR Bloomberg International Treasury Bond ETF
+VGSH;Bonds;US Bonds short term;Vanguard Short-Term Treasury ETF
+BIL;Bonds;US Treasury Bills;SPDR Bloomberg 1-3 Month T-Bill ETF
+USO;Energy;Crude Oil;United States Oil Fund
+UCO;Energy;Crude Oil;ProShares Ultra Bloomberg Crude Oil
+UNG;Energy;Natural Gas;United States Natural Gas Fund LP
+UGA;Energy;Gasoline;United States Gasoline Fund LP
+DBE;Energy;Energy;Invesco DB Energy Fund
+SPY;Equity;SP500;SPDR S&P 500
+QQQ;Equity;NASDAQ100;Invesco QQQ Trust, Series 1
+URTH;Equity;World;iShares MSCI World
+EEM;Equity;Emerging;iShares MSCI Emerging Markets ETF
+EWJ;Equity;Japan;iShares MSCI Japan ETF
+AIA;Equity;Asia;iShares Asia 50 ETF
+EWZ;Equity;Brasil;iShares MSCI Brazil ETF
+EWW;Equity;Mexico;iShares MSCI Mexico ETF
+ILF;Equity;Latin America;iShares Latin America 40 ETF
+ECH;Equity;Chile;iShares MSCI Chile ETF
+ARGT;Equity;Argentina;Global X MSCI Argentina ETF
+EPOL;Equity;Poland;iShares MSCI Poland ETF
+TUR;Equity;Turkey;iShares MSCI Turkey ETF
+INDA;Equity;India;iShares MSCI India ETF
+MCHI;Equity;China;iShares MSCI China ETF
+VGK;Equity;Europe;Vanguard FTSE Europe ETF
+EZU;Equity;Eurozone;iShares MSCI Eurozone ETF
+FEZ;Equity;Euro 50;SPDR EURO STOXX 50 ETF
+EWU;Equity;UK;iShares MSCI United Kingdom ETF
+IEV;Equity;Europe;iShares Europe ETF
+EWG;Equity;Germany;iShares MSCI Germany ETF
+EWL;Equity;Switzerland;iShares MSCI Switzerland ETF
+EWI;Equity;Italy;iShares MSCI Italy ETF
+EWQ;Equity;France;iShares MSCI France ETF
+EWD;Equity;Sweden;iShares MSCI Sweden ETF
+GREK;Equity;Greece;Global X MSCI Greece ETF
+EWN;Equity;Netherlands;iShares MSCI Netherlands ETF
+EWT;Equity;Taiwan;iShares MSCI Taiwan ETF
+EWY;Equity;Korea;iShares MSCI South Korea ETF
+EWA;Equity;Australia;iShares MSCI-Australia ETF
+GLD;Metals;Gold;SPDR Gold Shares
+SLV;Metals;Silver;iShares Silver Trust
+DBB;Metals;Metals;Invesco DB Base Metals Fund
+CPER;Metals;Copper;United States Copper Index Fund

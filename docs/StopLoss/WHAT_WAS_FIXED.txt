@@ -1,0 +1,105 @@
+===============================================================================
+STOP LOSS BUG FIXES - WHAT WAS WRONG AND HOW IT'S FIXED
+===============================================================================
+
+PROBLEM 1: Stops Cancelled Immediately After Being Placed
+----------------------------------------------------------
+YOUR LOG SHOWED:
+  2022-08-16, BUY EXECUTED: ECH
+  2022-08-16, TRAILING STOP placed for ECH: 3.0%
+  2022-08-16, Cancelled stop order for ECH  <-- SAME DAY!
+
+WHY THIS HAPPENED:
+  1. Buy order executes → notify_order() called
+  2. notify_order() immediately places stop
+  3. next() runs rebalance logic on SAME bar
+  4. rebalance calls _cancel_stop_orders()
+  5. Your stop is gone before market even closes!
+
+THE FIX:
+  - Stops are now QUEUED when buy executes
+  - Queue is processed at START of NEXT bar
+  - Timing: Cancel old stops → Rebalance → Next bar places new stops
+  
+RESULT: No more same-day cancellations!
+
+===============================================================================
+
+PROBLEM 2: Wrong Entry Price When Accumulating Positions
+----------------------------------------------------------
+YOUR LOG SHOWED:
+  Day 1: BUY 543 shares ECH @ 28.41
+  Day 2: BUY 8 more shares ECH @ 27.66
+  
+WHAT WAS WRONG:
+  - Entry price was overwritten to 27.66
+  - Stop calculated from wrong price (only last buy)
+  - Position = 551 shares but stop only for 8 shares!
+
+THE FIX:
+  - Calculate weighted average entry price
+  - Formula: (28.41 × 543 + 27.66 × 8) / 551 = 28.40
+  - Stop size always matches TOTAL position (551 shares)
+  
+RESULT: Accurate stop prices and sizes!
+
+===============================================================================
+
+PROBLEM 3: Stops Not Properly Cleared
+----------------------------------------------------------
+WHAT WAS WRONG:
+  - Every sell cleared the entry price
+  - Partial sells during rebalance broke stop tracking
+  - Full stop-triggered exits might not clear properly
+
+THE FIX:
+  - Check position.size AFTER sell executes
+  - Only clear entry_price and stop when position == 0
+  - Allows rebalancing to adjust positions while keeping stops active
+  
+RESULT: Stops survive rebalancing adjustments!
+
+===============================================================================
+
+CODE CHANGES MADE:
+-------------------------------------------------------------------------------
+1. Added: self.pending_stop_placements = []  (queue for next-bar placement)
+
+2. Modified notify_order():
+   - Calculate weighted average entry when accumulating
+   - Queue stop placement instead of immediate
+   - Only clear on full position close
+
+3. Modified next():
+   - Process pending stops FIRST
+   - Cancel stops BEFORE rebalancing
+   - Stops placed next bar after buys
+
+4. Modified _place_stop_order():
+   - Better logging shows position size
+   - Always uses total position size
+
+5. Modified rebalance_portfolio():
+   - Removed redundant stop cancellation
+
+===============================================================================
+
+WHAT TO EXPECT NOW:
+-------------------------------------------------------------------------------
+✓ Stops placed day AFTER buy execution
+✓ Stop sizes match total position
+✓ Entry prices are weighted averages
+✓ Stops protect during market moves
+✓ Rebalancing doesn't break stops
+✓ Clean logs showing proper timing
+
+===============================================================================
+
+TO TEST:
+Run your GEM strategy and verify:
+1. No "placed → cancelled" on same day
+2. Stop sizes = position sizes  
+3. Stops trigger when price drops
+4. New stops after each rebalance
+
+===============================================================================

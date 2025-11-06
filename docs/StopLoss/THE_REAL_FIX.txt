@@ -1,0 +1,22 @@
+THE REAL BUG FIX
+================
+
+PROBLEM: Stops placed and cancelled on same day
+
+ROOT CAUSE: 
+- Pending stops from previous bar were placed at START of next()
+- Then rebalance check ran and cancelled them
+- All on the same bar!
+
+THE FIX:
+Check if today is rebalance day FIRST
+- If YES: Skip stop placement, cancel old stops, rebalance
+- If NO: Safe to place pending stops from yesterday
+
+RESULT:
+Day 21 (rebalance): Cancel stops, rebalance (no placement)
+Day 22: Place stops queued from Day 21 orders
+Days 22-40: Stops protect positions
+Day 41 (rebalance): Repeat cycle
+
+Test your strategy now - should be fixed!

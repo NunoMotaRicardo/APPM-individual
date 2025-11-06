@@ -1,0 +1,65 @@
+# Summary of Changes - Margin Order Fix
+
+## Date: 2025-10-09
+
+## Files Modified:
+- BacktestFramework.py
+
+## Changes Made:
+
+### 1. Added Documentation Header (Lines 11-50)
+Comprehensive documentation explaining the margin order handling improvements at the top of the file.
+
+### 2. Enhanced rebalance_portfolio() Method (Lines 335-420)
+**Key Changes**:
+- Added commission info retrieval for each asset: self.broker.getcommissioninfo(data)
+- Calculate sell commission and deduct from expected cash
+- Iteratively find max affordable shares using getoperationcost(size, price)
+- Account for TOTAL order cost (shares * price + commission)
+
+**Before**:
+`python
+max_affordable_shares = int(effective_cash // buffered_price)
+`
+
+**After**:
+`python
+max_affordable_shares = 0
+test_size = int(effective_cash // buffered_price)
+
+while test_size > 0:
+    operation_cost = asset['comminfo'].getoperationcost(test_size, buffered_price)
+    if operation_cost <= effective_cash:
+        max_affordable_shares = test_size
+        break
+    test_size = int(test_size * 0.95)
+`
+
+### 3. Added checksubmit Parameter (Lines 500-503)
+**BacktraderPortfolioBacktest.__init__()**:
+- New parameter: checksubmit=True
+- Applied in run_single_backtest: cerebro.broker.set_checksubmit(self.checksubmit)
+
+### 4. Created Documentation File
+- MARGIN_ORDERS_FIX.md - Comprehensive guide for users
+
+## Testing Checklist:
+
+✅ Code compiles without errors
+✅ Documentation added inline
+✅ Parameter defaults maintain backward compatibility
+✅ Commission calculation integrated
+✅ Slippage buffer preserved
+✅ Comprehensive user guide created
+
+## Recommended Next Steps:
+
+1. **Run existing backtests** to verify no regression
+2. **Monitor order_history analyzer** for margin_orders count
+3. **Compare results** with previous runs to ensure consistency
+4. **Adjust buy_slippage_buffer** if needed in volatile markets
+
+## Not Committed to Git (as requested)
+
+Changes are ready for review but have NOT been committed. Review and test before committing.
+

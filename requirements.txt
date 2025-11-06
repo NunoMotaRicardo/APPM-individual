@@ -1,0 +1,15 @@
+numpy
+cvxpy
+pandas
+scipy
+statsmodels
+quantstats
+matplotlib
+seaborn
+plotly
+ipykernel
+backtrader
+ECOS
+nbformat
+scikit-learn
+ipykernel
